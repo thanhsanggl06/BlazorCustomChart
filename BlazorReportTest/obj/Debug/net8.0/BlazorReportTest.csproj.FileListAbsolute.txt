@@ -48,4 +48,6 @@ D:\GitSrc\BlazorReportTest\BlazorReportTest\obj\Debug\net8.0\BlazorReportTest.ge
 D:\GitSrc\BlazorReportTest\BlazorReportTest\obj\Debug\net8.0\ref\BlazorReportTest.dll
 D:\GitSrc\BlazorReportTest\BlazorReportTest\obj\Debug\net8.0\scopedcss\Components\DashboardChartJs\MonthlyBarChartJs.razor.rz.scp.css
 D:\GitSrc\BlazorReportTest\BlazorReportTest\obj\Debug\net8.0\scopedcss\Components\DashboardChartJs\NestedDonutChartJs.razor.rz.scp.css
+D:\GitSrc\BlazorReportTest\BlazorReportTest\obj\Debug\net8.0\BlazorReportTest.sourcelink.json
+D:\GitSrc\BlazorReportTest\BlazorReportTest\obj\Debug\net8.0\scopedcss\Components\Dashboard\ChartTooltip.razor.rz.scp.css
 D:\GitSrc\BlazorReportTest\BlazorReportTest\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

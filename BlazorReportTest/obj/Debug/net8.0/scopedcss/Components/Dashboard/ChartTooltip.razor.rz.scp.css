@@ -1,0 +1,55 @@
+.chart-tooltip[b-wvl3xiw8bm] {
+    position: absolute;
+    transform: translate(-50%, calc(-100% - 10px));
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--mud-palette-gray-darker);
+    color: var(--mud-palette-dark-text);
+    border-radius: var(--mud-default-borderradius);
+    padding: 5px 10px;
+    font-size: 0.75rem;
+    line-height: 1.3;
+    white-space: nowrap;
+    pointer-events: none;
+    box-shadow: var(--mud-elevation-8);
+    z-index: var(--mud-zindex-tooltip);
+    animation: chart-tooltip-in-b-wvl3xiw8bm 0.12s ease-out;
+}
+
+@keyframes chart-tooltip-in-b-wvl3xiw8bm {
+    from {
+        opacity: 0;
+        transform: translate(-50%, calc(-100% - 2px));
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, calc(-100% - 10px));
+    }
+}
+
+.chart-tooltip[b-wvl3xiw8bm]::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--mud-palette-gray-darker);
+}
+
+.chart-tooltip-dot[b-wvl3xiw8bm] {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.chart-tooltip-title[b-wvl3xiw8bm] {
+    font-weight: 600;
+}
+
+.chart-tooltip-value[b-wvl3xiw8bm] {
+    opacity: 0.85;
+}

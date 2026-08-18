@@ -3,6 +3,10 @@
     overflow-x: auto;
 }
 
+.dashboard-chart-overlay-anchor[b-rqildo04ki] {
+    position: relative;
+}
+
 .monthly-bar-chart[b-rqildo04ki] {
     width: 100%;
     min-width: 640px;
@@ -21,8 +25,16 @@
 }
 
 .monthly-bar-chart-bar[b-rqildo04ki] {
-    transition: opacity 0.15s ease-in-out;
     rx: 2px;
+    cursor: pointer;
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: opacity 0.15s ease, transform 0.15s ease, filter 0.15s ease, height 0.3s ease, y 0.3s ease, stroke-width 0.15s ease;
+}
+
+.monthly-bar-chart-bar:hover[b-rqildo04ki] {
+    filter: brightness(1.12);
+    transform: scaleX(1.08);
 }
 
 .monthly-bar-chart-bar-selected[b-rqildo04ki] {
@@ -33,8 +45,4 @@
 .monthly-bar-chart-hitarea[b-rqildo04ki] {
     fill: transparent;
     cursor: pointer;
-}
-
-.monthly-bar-chart-hitarea:hover + .monthly-bar-chart-bar[b-rqildo04ki] {
-    opacity: 0.8;
 }

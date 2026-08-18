@@ -1,0 +1,17 @@
+@if (Info is not null)
+{
+    <div class="chart-tooltip" style="left:@F(Info.XPercent)%; top:@F(Info.YPercent)%;">
+        <div class="chart-tooltip-dot" style="background-color:@Info.Color;"></div>
+        <div class="chart-tooltip-text">
+            <div class="chart-tooltip-title">@Info.Title</div>
+            <div class="chart-tooltip-value">@Info.Value</div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public ChartTooltipInfo? Info { get; set; }
+
+    private static string F(double value) => value.ToString(System.Globalization.CultureInfo.InvariantCulture);
+}

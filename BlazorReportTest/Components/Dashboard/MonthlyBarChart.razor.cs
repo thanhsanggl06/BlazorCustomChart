@@ -36,6 +36,7 @@ public partial class MonthlyBarChart : ComponentBase
     private List<StackedGroup> _stackedGroups = [];
     private List<GridLine> _gridLines = [];
     private List<string> _typeLegend = [];
+    private ChartTooltipInfo? _hoverInfo;
 
     protected override void OnParametersSet()
     {
@@ -54,6 +55,7 @@ public partial class MonthlyBarChart : ComponentBase
         }
 
         _mode = mode;
+        _hoverInfo = null;
         RebuildVisuals();
     }
 
@@ -113,7 +115,8 @@ public partial class MonthlyBarChart : ComponentBase
                 niceMax: niceMax,
                 color: DashboardChartColors.CurrentYear,
                 selection: new ChartSelection { Year = point.Year, Month = point.Month },
-                tooltip: $"{point.MonthLabel} (Current Year): {point.CurrentYearValue}"));
+                tooltipTitle: point.MonthLabel,
+                tooltipValue: $"Current Year: {point.CurrentYearValue}"));
 
             bars.Add(CreateBarVisual(
                 x: groupStartX + barWidth + barGap,
@@ -122,19 +125,20 @@ public partial class MonthlyBarChart : ComponentBase
                 niceMax: niceMax,
                 color: DashboardChartColors.PreviousYear,
                 selection: new ChartSelection { Year = point.PreviousYear, Month = point.Month },
-                tooltip: $"{new DateTime(point.PreviousYear, point.Month, 1):MMM yyyy} (Previous Year): {point.PreviousYearValue}"));
+                tooltipTitle: new DateTime(point.PreviousYear, point.Month, 1).ToString("MMM yyyy"),
+                tooltipValue: $"Previous Year: {point.PreviousYearValue}"));
         }
 
         return bars;
     }
 
-    private BarVisual CreateBarVisual(double x, double width, int value, int niceMax, string color, ChartSelection selection, string tooltip)
+    private BarVisual CreateBarVisual(double x, double width, int value, int niceMax, string color, ChartSelection selection, string tooltipTitle, string tooltipValue)
     {
         var barHeight = niceMax == 0 ? 0 : PlotHeight * value / niceMax;
         var y = PlotTop + PlotHeight - barHeight;
         var isSelected = SelectedPeriod is not null && SelectedPeriod.Year == selection.Year && SelectedPeriod.Month == selection.Month;
 
-        return new BarVisual(x, y, width, barHeight, PlotTop, PlotHeight, color, selection, tooltip, value, isSelected);
+        return new BarVisual(x, y, width, barHeight, PlotTop, PlotHeight, color, selection, tooltipTitle, tooltipValue, isSelected);
     }
 
     private List<StackedGroup> BuildStackedGroups(List<MonthlyTypeBreakdownPoint> points, int niceMax)
@@ -170,12 +174,13 @@ public partial class MonthlyBarChart : ComponentBase
                     y,
                     segmentHeight,
                     DashboardChartColors.FromPalette(DashboardChartColors.TypePalette, typeIndex),
-                    $"{point.MonthLabel} - {typeItem.Label}: {typeItem.Value}"));
+                    point.MonthLabel,
+                    $"{typeItem.Label}: {typeItem.Value}"));
 
                 cumulativeHeight += segmentHeight;
             }
 
-            groups.Add(new StackedGroup(x, barWidth, PlotTop, PlotHeight, selection, isSelected, $"{point.MonthLabel}: {point.Total}", segments));
+            groups.Add(new StackedGroup(x, barWidth, PlotTop, PlotHeight, selection, isSelected, point.MonthLabel, $"Total: {point.Total}", segments));
         }
 
         return groups;
@@ -197,6 +202,11 @@ public partial class MonthlyBarChart : ComponentBase
     }
 
     private Task HandleBarClickAsync(ChartSelection selection) => OnSelected.InvokeAsync(selection);
+
+    private void ShowTooltip(double svgX, double svgY, string title, string value, string color) =>
+        _hoverInfo = new ChartTooltipInfo(svgX / ViewBoxWidth * 100, svgY / ViewBoxHeight * 100, title, value, color);
+
+    private void HideTooltip() => _hoverInfo = null;
 
     private double GetGroupLabelX(int index) => PlotLeft + (index * (PlotWidth / _points.Count)) + ((PlotWidth / _points.Count) / 2);
 
@@ -242,11 +252,11 @@ public partial class MonthlyBarChart : ComponentBase
         double HitAreaHeight,
         string Color,
         ChartSelection Selection,
-        string Tooltip,
-        int Value,
+        string TooltipTitle,
+        string TooltipValue,
         bool IsSelected);
 
-    private sealed record StackedSegment(double Y, double Height, string Color, string Tooltip);
+    private sealed record StackedSegment(double Y, double Height, string Color, string TooltipTitle, string TooltipValue);
 
     private sealed record StackedGroup(
         double X,
@@ -255,7 +265,8 @@ public partial class MonthlyBarChart : ComponentBase
         double HitAreaHeight,
         ChartSelection Selection,
         bool IsSelected,
-        string HitTooltip,
+        string HitTooltipTitle,
+        string HitTooltipValue,
         List<StackedSegment> Segments);
 
     private sealed record GridLine(double Y, string Label);
