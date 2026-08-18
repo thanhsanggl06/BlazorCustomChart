@@ -1,0 +1,3 @@
+wwwroot\app.css
+wwwroot\js\dashboard-chartjs\dashboard-charts.js
+wwwroot\js\dashboard-chartjs\vendor\chart.umd.min.js

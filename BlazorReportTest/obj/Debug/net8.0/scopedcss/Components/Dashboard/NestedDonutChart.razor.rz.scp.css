@@ -1,0 +1,20 @@
+.nested-donut-chart[b-7dcgo17ekx] {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+}
+
+.nested-donut-track[b-7dcgo17ekx] {
+    fill: none;
+    stroke: var(--mud-palette-table-striped);
+}
+
+.nested-donut-segment[b-7dcgo17ekx] {
+    fill: none;
+    stroke-linecap: butt;
+    transition: opacity 0.15s ease-in-out;
+}
+
+.nested-donut-segment:hover[b-7dcgo17ekx] {
+    opacity: 0.8;
+}

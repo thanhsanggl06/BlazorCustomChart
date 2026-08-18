@@ -1,0 +1,78 @@
+@if (!_hasData)
+{
+    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Class="my-4">No data available</MudAlert>
+}
+else
+{
+    <MudGrid>
+        <MudItem xs="12" md="5" Class="d-flex justify-center">
+            <svg class="nested-donut-chart" viewBox="0 0 300 300" role="img"
+                 aria-label="Nested donut chart of status, department and system">
+                <g transform="rotate(-90 150 150)">
+                    <circle class="nested-donut-track" cx="150" cy="150" r="128" stroke-width="26" />
+                    <circle class="nested-donut-track" cx="150" cy="150" r="98" stroke-width="26" />
+                    <circle class="nested-donut-track" cx="150" cy="150" r="68" stroke-width="26" />
+
+                    @foreach (var segment in _statusSegments)
+                    {
+                        <circle class="nested-donut-segment" cx="150" cy="150" r="@segment.Radius" stroke-width="26"
+                                stroke="@segment.Color" stroke-dasharray="@segment.DashArray"
+                                stroke-dashoffset="@segment.DashOffset">
+                            <title>Status - @segment.Label: @segment.Value (@segment.PercentageLabel%)</title>
+                        </circle>
+                    }
+                    @foreach (var segment in _departmentSegments)
+                    {
+                        <circle class="nested-donut-segment" cx="150" cy="150" r="@segment.Radius" stroke-width="26"
+                                stroke="@segment.Color" stroke-dasharray="@segment.DashArray"
+                                stroke-dashoffset="@segment.DashOffset">
+                            <title>Department - @segment.Label: @segment.Value (@segment.PercentageLabel%)</title>
+                        </circle>
+                    }
+                    @foreach (var segment in _systemSegments)
+                    {
+                        <circle class="nested-donut-segment" cx="150" cy="150" r="@segment.Radius" stroke-width="26"
+                                stroke="@segment.Color" stroke-dasharray="@segment.DashArray"
+                                stroke-dashoffset="@segment.DashOffset">
+                            <title>System - @segment.Label: @segment.Value (@segment.PercentageLabel%)</title>
+                        </circle>
+                    }
+                </g>
+            </svg>
+        </MudItem>
+        <MudItem xs="12" md="7">
+            <MudGrid>
+                <MudItem xs="12" sm="4">
+                    <MudText Typo="Typo.subtitle2" Class="mb-1">Status</MudText>
+                    @foreach (var segment in _statusSegments)
+                    {
+                        <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center" Class="mb-1">
+                            <div class="dashboard-legend-swatch" style="background-color:@segment.Color;"></div>
+                            <MudText Typo="Typo.body2">@segment.Label (@segment.Value)</MudText>
+                        </MudStack>
+                    }
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudText Typo="Typo.subtitle2" Class="mb-1">Department</MudText>
+                    @foreach (var segment in _departmentSegments)
+                    {
+                        <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center" Class="mb-1">
+                            <div class="dashboard-legend-swatch" style="background-color:@segment.Color;"></div>
+                            <MudText Typo="Typo.body2">@segment.Label (@segment.Value)</MudText>
+                        </MudStack>
+                    }
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudText Typo="Typo.subtitle2" Class="mb-1">System</MudText>
+                    @foreach (var segment in _systemSegments)
+                    {
+                        <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center" Class="mb-1">
+                            <div class="dashboard-legend-swatch" style="background-color:@segment.Color;"></div>
+                            <MudText Typo="Typo.body2">@segment.Label (@segment.Value)</MudText>
+                        </MudStack>
+                    }
+                </MudItem>
+            </MudGrid>
+        </MudItem>
+    </MudGrid>
+}

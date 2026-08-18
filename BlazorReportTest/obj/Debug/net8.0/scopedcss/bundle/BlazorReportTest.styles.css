@@ -1,0 +1,94 @@
+/* /Components/DashboardChartJs/MonthlyBarChartJs.razor.rz.scp.css */
+.chartjs-canvas-wrap[b-igky6au3p3] {
+    position: relative;
+    width: 100%;
+    height: 320px;
+}
+/* /Components/DashboardChartJs/NestedDonutChartJs.razor.rz.scp.css */
+.chartjs-donut-wrap[b-jfgjgdnw79] {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    height: 300px;
+}
+/* /Components/Dashboard/MonthlyBarChart.razor.rz.scp.css */
+.dashboard-chart-scroll[b-rqildo04ki] {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.monthly-bar-chart[b-rqildo04ki] {
+    width: 100%;
+    min-width: 640px;
+    height: auto;
+    display: block;
+}
+
+.monthly-bar-chart-gridline[b-rqildo04ki] {
+    stroke: var(--mud-palette-lines-default);
+    stroke-width: 1;
+}
+
+.monthly-bar-chart-axis-label[b-rqildo04ki] {
+    fill: var(--mud-palette-text-secondary);
+    font-size: 12px;
+}
+
+.monthly-bar-chart-bar[b-rqildo04ki] {
+    transition: opacity 0.15s ease-in-out;
+    rx: 2px;
+}
+
+.monthly-bar-chart-bar-selected[b-rqildo04ki] {
+    stroke: var(--mud-palette-text-primary);
+    stroke-width: 2px;
+}
+
+.monthly-bar-chart-hitarea[b-rqildo04ki] {
+    fill: transparent;
+    cursor: pointer;
+}
+
+.monthly-bar-chart-hitarea:hover + .monthly-bar-chart-bar[b-rqildo04ki] {
+    opacity: 0.8;
+}
+/* /Components/Dashboard/NestedDonutChart.razor.rz.scp.css */
+.nested-donut-chart[b-7dcgo17ekx] {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+}
+
+.nested-donut-track[b-7dcgo17ekx] {
+    fill: none;
+    stroke: var(--mud-palette-table-striped);
+}
+
+.nested-donut-segment[b-7dcgo17ekx] {
+    fill: none;
+    stroke-linecap: butt;
+    transition: opacity 0.15s ease-in-out;
+}
+
+.nested-donut-segment:hover[b-7dcgo17ekx] {
+    opacity: 0.8;
+}
+/* /Components/Layout/MainLayout.razor.rz.scp.css */
+#blazor-error-ui[b-lpt12t0igq] {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss[b-lpt12t0igq] {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }

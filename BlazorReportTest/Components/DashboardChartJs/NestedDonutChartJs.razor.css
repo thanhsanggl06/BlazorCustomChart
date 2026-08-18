@@ -1,0 +1,6 @@
+.chartjs-donut-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    height: 300px;
+}

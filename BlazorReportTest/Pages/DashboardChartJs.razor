@@ -1,0 +1,32 @@
+@page "/chartjs"
+
+<PageTitle>Dashboard (Chart.js)</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="pa-4">
+    <MudText Typo="Typo.h4" Class="mb-4">Dashboard (Chart.js)</MudText>
+
+    @if (_hasError)
+    {
+        <MudAlert Severity="Severity.Error">Unable to load dashboard data.</MudAlert>
+    }
+    else if (_isLoading)
+    {
+        <MudPaper Class="pa-8 d-flex justify-center" Elevation="0">
+            <MudProgressCircular Indeterminate="true" />
+        </MudPaper>
+    }
+    else
+    {
+        <MudStack Spacing="4">
+            <MudPaper Class="pa-4" Elevation="2">
+                <MudText Typo="Typo.h6" Class="mb-2">Monthly Statistics</MudText>
+                <MonthlyBarChartJs Data="_allData" SelectedPeriod="_selected" OnSelected="OnChartSelected" />
+            </MudPaper>
+
+            <MudPaper Class="pa-4" Elevation="2">
+                <MudText Typo="Typo.subtitle1" Class="mb-2">Selected Period: @SelectedPeriodLabel</MudText>
+                <NestedDonutChartJs Data="_donutData" />
+            </MudPaper>
+        </MudStack>
+    }
+</MudContainer>

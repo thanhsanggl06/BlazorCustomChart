@@ -1,0 +1,44 @@
+@using BlazorReportTest.Theming
+
+<MudStack Row="true" Justify="Justify.FlexEnd" Class="mb-2">
+    <MudButtonGroup Variant="Variant.Outlined" Size="Size.Small">
+        <MudButton Color="@(_mode == BarChartMode.YearComparison ? Color.Primary : Color.Default)"
+                   OnClick="() => SetMode(BarChartMode.YearComparison)">
+            Year Comparison
+        </MudButton>
+        <MudButton Color="@(_mode == BarChartMode.TypeBreakdown ? Color.Primary : Color.Default)"
+                   OnClick="() => SetMode(BarChartMode.TypeBreakdown)">
+            By Type
+        </MudButton>
+    </MudButtonGroup>
+</MudStack>
+
+<div class="chartjs-canvas-wrap">
+    <canvas id="@_canvasId"></canvas>
+</div>
+
+@if (_mode == BarChartMode.YearComparison)
+{
+    <MudStack Row="true" Justify="Justify.Center" Spacing="4" Class="mt-2">
+        <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
+            <div class="dashboard-legend-swatch" style="background-color:@DashboardChartColors.CurrentYear;"></div>
+            <MudText Typo="Typo.body2">Current Year</MudText>
+        </MudStack>
+        <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
+            <div class="dashboard-legend-swatch" style="background-color:@DashboardChartColors.PreviousYear;"></div>
+            <MudText Typo="Typo.body2">Previous Year</MudText>
+        </MudStack>
+    </MudStack>
+}
+else
+{
+    <MudStack Row="true" Justify="Justify.Center" Spacing="4" Class="mt-2">
+        @foreach (var entry in _typeLegend.Select((label, index) => (label, color: DashboardChartColors.FromPalette(DashboardChartColors.TypePalette, index))))
+        {
+            <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
+                <div class="dashboard-legend-swatch" style="background-color:@entry.color;"></div>
+                <MudText Typo="Typo.body2">@entry.label</MudText>
+            </MudStack>
+        }
+    </MudStack>
+}

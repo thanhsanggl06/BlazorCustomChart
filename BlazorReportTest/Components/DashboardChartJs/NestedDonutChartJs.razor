@@ -1,0 +1,50 @@
+@using BlazorReportTest.Theming
+
+@if (!_hasData)
+{
+    <MudAlert Severity="Severity.Info" Variant="Variant.Outlined" Class="my-4">No data available</MudAlert>
+}
+else
+{
+    <MudGrid>
+        <MudItem xs="12" md="5" Class="d-flex justify-center">
+            <div class="chartjs-donut-wrap">
+                <canvas id="@_canvasId"></canvas>
+            </div>
+        </MudItem>
+        <MudItem xs="12" md="7">
+            <MudGrid>
+                <MudItem xs="12" sm="4">
+                    <MudText Typo="Typo.subtitle2" Class="mb-1">Status</MudText>
+                    @foreach (var entry in Data.Status.Select((item, index) => (item, color: DashboardChartColors.FromPalette(DashboardChartColors.StatusPalette, index))))
+                    {
+                        <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center" Class="mb-1">
+                            <div class="dashboard-legend-swatch" style="background-color:@entry.color;"></div>
+                            <MudText Typo="Typo.body2">@entry.item.Label (@entry.item.Value)</MudText>
+                        </MudStack>
+                    }
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudText Typo="Typo.subtitle2" Class="mb-1">Department</MudText>
+                    @foreach (var entry in Data.Departments.Select((item, index) => (item, color: DashboardChartColors.FromPalette(DashboardChartColors.DepartmentPalette, index))))
+                    {
+                        <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center" Class="mb-1">
+                            <div class="dashboard-legend-swatch" style="background-color:@entry.color;"></div>
+                            <MudText Typo="Typo.body2">@entry.item.Label (@entry.item.Value)</MudText>
+                        </MudStack>
+                    }
+                </MudItem>
+                <MudItem xs="12" sm="4">
+                    <MudText Typo="Typo.subtitle2" Class="mb-1">System</MudText>
+                    @foreach (var entry in Data.Systems.Select((item, index) => (item, color: DashboardChartColors.FromPalette(DashboardChartColors.SystemPalette, index))))
+                    {
+                        <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center" Class="mb-1">
+                            <div class="dashboard-legend-swatch" style="background-color:@entry.color;"></div>
+                            <MudText Typo="Typo.body2">@entry.item.Label (@entry.item.Value)</MudText>
+                        </MudStack>
+                    }
+                </MudItem>
+            </MudGrid>
+        </MudItem>
+    </MudGrid>
+}

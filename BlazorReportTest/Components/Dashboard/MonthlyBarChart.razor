@@ -1,0 +1,87 @@
+@using BlazorReportTest.Theming
+
+<MudStack Row="true" Justify="Justify.FlexEnd" Class="mb-2">
+    <MudButtonGroup Variant="Variant.Outlined" Size="Size.Small">
+        <MudButton Color="@(_mode == BarChartMode.YearComparison ? Color.Primary : Color.Default)"
+                   OnClick="() => SetMode(BarChartMode.YearComparison)">
+            Year Comparison
+        </MudButton>
+        <MudButton Color="@(_mode == BarChartMode.TypeBreakdown ? Color.Primary : Color.Default)"
+                   OnClick="() => SetMode(BarChartMode.TypeBreakdown)">
+            By Type
+        </MudButton>
+    </MudButtonGroup>
+</MudStack>
+
+<div class="dashboard-chart-scroll">
+    <svg class="monthly-bar-chart" viewBox="0 0 900 320" preserveAspectRatio="xMidYMid meet" role="img"
+         aria-label="Monthly comparison bar chart">
+
+        @foreach (var line in _gridLines)
+        {
+            <line class="monthly-bar-chart-gridline" x1="44" y1="@F(line.Y)" x2="888" y2="@F(line.Y)" />
+        }
+
+        @RenderAxisLabels()
+
+        @if (_mode == BarChartMode.YearComparison)
+        {
+            @foreach (var bar in _bars)
+            {
+                <rect class="monthly-bar-chart-hitarea"
+                      x="@F(bar.X)" y="@F(bar.HitAreaY)" width="@F(bar.Width)" height="@F(bar.HitAreaHeight)"
+                      @onclick="() => HandleBarClickAsync(bar.Selection)">
+                    <title>@bar.Tooltip</title>
+                </rect>
+                <rect class="monthly-bar-chart-bar @(bar.IsSelected ? "monthly-bar-chart-bar-selected" : "")"
+                      x="@F(bar.X)" y="@F(bar.Y)" width="@F(bar.Width)" height="@F(bar.Height)" fill="@bar.Color"
+                      style="pointer-events: none;" />
+            }
+        }
+        else
+        {
+            @foreach (var group in _stackedGroups)
+            {
+                <rect class="monthly-bar-chart-hitarea"
+                      x="@F(group.X)" y="@F(group.HitAreaY)" width="@F(group.Width)" height="@F(group.HitAreaHeight)"
+                      @onclick="() => HandleBarClickAsync(group.Selection)">
+                    <title>@group.HitTooltip</title>
+                </rect>
+                @foreach (var segment in group.Segments)
+                {
+                    <rect class="monthly-bar-chart-bar @(group.IsSelected ? "monthly-bar-chart-bar-selected" : "")"
+                          x="@F(group.X)" y="@F(segment.Y)" width="@F(group.Width)" height="@F(segment.Height)"
+                          fill="@segment.Color" @onclick="() => HandleBarClickAsync(group.Selection)">
+                        <title>@segment.Tooltip</title>
+                    </rect>
+                }
+            }
+        }
+    </svg>
+</div>
+
+@if (_mode == BarChartMode.YearComparison)
+{
+    <MudStack Row="true" Justify="Justify.Center" Spacing="4" Class="mt-2">
+        <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
+            <div class="dashboard-legend-swatch" style="background-color:@DashboardChartColors.CurrentYear;"></div>
+            <MudText Typo="Typo.body2">Current Year</MudText>
+        </MudStack>
+        <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
+            <div class="dashboard-legend-swatch" style="background-color:@DashboardChartColors.PreviousYear;"></div>
+            <MudText Typo="Typo.body2">Previous Year</MudText>
+        </MudStack>
+    </MudStack>
+}
+else
+{
+    <MudStack Row="true" Justify="Justify.Center" Spacing="4" Class="mt-2">
+        @foreach (var entry in _typeLegend.Select((label, index) => (label, color: DashboardChartColors.FromPalette(DashboardChartColors.TypePalette, index))))
+        {
+            <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
+                <div class="dashboard-legend-swatch" style="background-color:@entry.color;"></div>
+                <MudText Typo="Typo.body2">@entry.label</MudText>
+            </MudStack>
+        }
+    </MudStack>
+}
